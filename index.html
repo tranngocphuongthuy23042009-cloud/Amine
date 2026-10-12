@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMINE LAB – Khám phá thế giới Amin | Hóa học 12</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#101B36',
+                            dark: '#0A1124',
+                            light: '#1B2A4E'
+                        },
+                        cyanAccent: '#35D6F2',
+                        mint: '#37D6B0',
+                        purpleElec: '#8B7CFF',
+                        ivory: '#F5F7FB',
+                        amberAlert: '#FFB454'
+                    },
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #101B36; color: #F5F7FB; }
+        .glow-cyan { box-shadow: 0 0 20px rgba(53, 214, 242, 0.3); }
+        .glow-purple { box-shadow: 0 0 20px rgba(139, 124, 255, 0.3); }
+        .glass-card { background: rgba(27, 42, 78, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(53, 214, 242, 0.2); }
+    </style>
+</head>
+<body class="bg-navy text-ivory min-h-screen flex flex-col selection:bg-cyanAccent selection:text-navy">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-navy/90 backdrop-blur-md border-b border-navy-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyanAccent to-purpleElec flex items-center justify-center text-navy font-bold text-xl shadow-lg glow-cyan">
+                    <i class="fa-solid fa-atom"></i>
+                </div>
+                <span class="text-2xl font-bold tracking-wider text-white">AMINE <span class="text-cyanAccent">LAB</span></span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-1 lg:space-x-6 text-sm font-medium">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg transition-all text-cyanAccent bg-navy-light/60">Trang chủ</button>
+                <button onclick="switchTab('project')" id="nav-project" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40">Tính chất & Điều chế</button>
+                <button onclick="switchTab('virtuallab')" id="nav-virtuallab" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40 flex items-center gap-2"><i class="fa-flask text-mint"></i> Phòng thí nghiệm ảo</button>
+                <button onclick="switchTab('gallery')" id="nav-gallery" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40">Thư viện</button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40">Kiểm tra</button>
+                <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40">Về chúng tôi</button>
+                <button onclick="switchTab('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-lg transition-all hover:text-cyanAccent hover:bg-navy-light/40">Liên hệ</button>
+            </nav>
+
+            <button class="md:hidden text-2xl text-cyanAccent focus:outline-none" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-navy-dark border-b border-navy-light">
+            <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Trang chủ</button>
+            <button onclick="switchTab('project'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Tính chất & Điều chế</button>
+            <button onclick="switchTab('virtuallab'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light text-mint">Phòng thí nghiệm ảo</button>
+            <button onclick="switchTab('gallery'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Thư viện</button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Kiểm tra kiến thức</button>
+            <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Về chúng tôi</button>
+            <button onclick="switchTab('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md hover:bg-navy-light">Liên hệ</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- TAB 1: HOME -->
+        <section id="tab-home" class="tab-content py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Hero Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-10">
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyanAccent/10 border border-cyanAccent/30 text-cyanAccent text-sm font-semibold">
+                        <i class="fa-solid fa-graduation-cap"></i> Hóa học 12 – Kết nối tri thức
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        AMINE <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyanAccent to-purpleElec">LAB</span>
+                    </h1>
+                    <p class="text-xl font-medium text-cyanAccent">Hiểu phản ứng. Khám phá phân tử. Làm chủ Hóa học.</p>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Khám phá tính chất hóa học và phương pháp điều chế amin thông qua mô phỏng thí nghiệm trực quan, sơ đồ phản ứng chuẩn xác và hệ thống câu hỏi tương tác hiện đại.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="switchTab('project')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyanAccent to-blue-500 text-navy font-bold shadow-lg hover:opacity-90 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                            Bắt đầu khám phá <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchTab('virtuallab')" class="px-8 py-4 rounded-xl glass-card text-white font-bold hover:bg-navy-light transition transform hover:-translate-y-0.5 flex items-center gap-2 glow-cyan">
+                            <i class="fa-flask text-mint"></i> Vào phòng thí nghiệm
+                        </button>
+                    </div>
+                </div>
+                <div class="relative flex justify-center">
+                    <div class="absolute w-72 h-72 bg-cyanAccent/20 rounded-full blur-3xl -top-10 -left-10"></div>
+                    <div class="absolute w-72 h-72 bg-purpleElec/20 rounded-full blur-3xl -bottom-10 -right-10"></div>
+                    <div class="glass-card p-8 rounded-3xl relative z-10 w-full max-w-md border border-cyanAccent/30 shadow-2xl text-center space-y-6">
+                        <div class="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-cyanAccent to-purpleElec flex items-center justify-center text-navy text-5xl shadow-inner">
+                            <i class="fa-solid fa-flask-vial"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Mô hình Phân tử Amin</h3>
+                        <p class="text-gray-300 text-sm">Trải nghiệm hình ảnh trực quan về cấu trúc nguyên tử Nitrogen và cặp electron tự do quyết định tính base.</p>
+                        <div class="grid grid-cols-3 gap-2 pt-2 text-center">
+                            <div class="p-3 bg-navy-dark/60 rounded-xl border border-navy-light">
+                                <div class="text-cyanAccent font-bold text-lg">CH₃NH₂</div>
+                                <div class="text-xs text-gray-400">Methylamine</div>
+                            </div>
+                            <div class="p-3 bg-navy-dark/60 rounded-xl border border-navy-light">
+                                <div class="text-mint font-bold text-lg">C₆H₅NH₂</div>
+                                <div class="text-xs text-gray-400">Aniline</div>
+                            </div>
+                            <div class="p-3 bg-navy-dark/60 rounded-xl border border-navy-light">
+                                <div class="text-purpleElec font-bold text-lg">R-NH₂</div>
+                                <div class="text-xs text-gray-400">Amin chung</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview 3 Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 my-16">
+                <div class="glass-card p-8 rounded-2xl hover:border-cyanAccent transition group">
+                    <div class="w-14 h-14 rounded-xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">1. Tính base của Amin</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">Tìm hiểu về cặp electron tự do trên nguyên tử N, khả năng nhận proton theo Brønsted–Lowry và phản ứng tạo muối.</p>
+                    <button onclick="switchTab('project')" class="text-cyanAccent text-sm font-semibold flex items-center gap-1 hover:underline">Xem chi tiết <i class="fa-solid fa-chevron-right text-xs"></i></button>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:border-purpleElec transition group">
+                    <div class="w-14 h-14 rounded-xl bg-purpleElec/10 text-purpleElec flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">2. Phản ứng với Acid Nitrous</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">Phân biệt sự khác nhau giữa amin no mạch hở và amin thơm (aniline) khi tác dụng với HNO₂ ở điều kiện chuẩn.</p>
+                    <button onclick="switchTab('project')" class="text-purpleElec text-sm font-semibold flex items-center gap-1 hover:underline">Xem chi tiết <i class="fa-solid fa-chevron-right text-xs"></i></button>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:border-mint transition group">
+                    <div class="w-14 h-14 rounded-xl bg-mint/10 text-mint flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-vials"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">3. Phương pháp Điều chế</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">Nắm vững các phương pháp alkyl hóa ammonia và khử hợp chất nitro thành amin theo sách giáo khoa Hóa 12.</p>
+                    <button onclick="switchTab('project')" class="text-mint text-sm font-semibold flex items-center gap-1 hover:underline">Xem chi tiết <i class="fa-solid fa-chevron-right text-xs"></i></button>
+                </div>
+            </div>
+
+            <!-- Learning Roadmap -->
+            <div class="my-20 p-8 rounded-3xl glass-card border border-navy-light">
+                <h2 class="text-3xl font-bold text-center text-white mb-10">Lộ trình học tập chuẩn <span class="text-cyanAccent">3 Bước</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                    <div class="text-center space-y-4">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-cyanAccent text-navy font-bold text-2xl flex items-center justify-center shadow-lg">1</div>
+                        <h4 class="text-xl font-bold text-white">Học Lý Thuyết</h4>
+                        <p class="text-gray-300 text-sm">Tiếp thu kiến thức cô đọng, công thức rõ ràng, không dài dòng, bám sát SGK Kết nối tri thức.</p>
+                    </div>
+                    <div class="text-center space-y-4">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-purpleElec text-white font-bold text-2xl flex items-center justify-center shadow-lg">2</div>
+                        <h4 class="text-xl font-bold text-white">Thí Nghiệm Áo</h4>
+                        <p class="text-gray-300 text-sm">Tương tác trực tiếp chọn hóa chất, quan sát hiện tượng kết tủa, đổi màu và phương trình cân bằng.</p>
+                    </div>
+                    <div class="text-center space-y-4">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-mint text-navy font-bold text-2xl flex items-center justify-center shadow-lg">3</div>
+                        <h4 class="text-xl font-bold text-white">Kiểm Tra Kiến Thức</h4>
+                        <p class="text-gray-300 text-sm">Thực hiện các câu hỏi trắc nghiệm tương tác để củng cố kiến thức và nhận phản hồi tức thì.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Challenge Quick Quiz -->
+            <div class="my-16 p-8 rounded-3xl bg-gradient-to-r from-navy-light to-navy border border-purpleElec/40 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="space-y-3">
+                    <div class="inline-block px-3 py-1 rounded-md bg-amberAlert/20 text-amberAlert font-semibold text-xs uppercase tracking-wider">Thử thách hôm nay</div>
+                    <h3 class="text-2xl font-bold text-white">Aniline tác dụng với nước bromine tạo ra hiện tượng gì?</h3>
+                    <p class="text-gray-300 text-sm">Chọn đáp án đúng nhất để kiểm tra phản ứng đặc trưng của aniline.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <button onclick="alert('Chính xác! Dung dịch bromine mất màu và xuất hiện kết tủa trắng 2,4,6-tribromoaniline.')" class="px-6 py-3 rounded-xl bg-mint text-navy font-bold text-sm hover:opacity-90 transition">Kết tủa trắng & mất màu Br₂</button>
+                    <button onclick="alert('Chưa chính xác. Hãy xem lại module Tính chất hóa học aniline nhé!')" class="px-6 py-3 rounded-xl bg-navy-dark border border-gray-600 text-gray-300 font-medium text-sm hover:border-cyanAccent transition">Sủi bọt khí không màu</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: PROJECT (Tính chất & Điều chế) -->
+        <section id="tab-project" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h1 class="text-4xl font-extrabold text-white">Khám phá tính chất hóa học và điều chế Amin</h1>
+                <p class="text-gray-300">Tài liệu chuyên sâu bám sát chương trình Hóa học 12 – Bộ sách Kết nối tri thức với cuộc sống.</p>
+            </div>
+
+            <!-- Module Navigation Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 border-b border-navy-light pb-6">
+                <button onclick="switchProjectModule('mod-a')" id="btn-mod-a" class="proj-tab-btn px-6 py-3 rounded-xl font-bold text-sm bg-cyanAccent text-navy transition shadow-md">Module A: Tính Base</button>
+                <button onclick="switchProjectModule('mod-b')" id="btn-mod-b" class="proj-tab-btn px-6 py-3 rounded-xl font-bold text-sm bg-navy-light text-gray-300 hover:text-white transition">Module B: Phản ứng với HNO₂</button>
+                <button onclick="switchProjectModule('mod-c')" id="btn-mod-c" class="proj-tab-btn px-6 py-3 rounded-xl font-bold text-sm bg-navy-light text-gray-300 hover:text-white transition">Module C: Tính chất Aniline</button>
+                <button onclick="switchProjectModule('mod-d')" id="btn-mod-d" class="proj-tab-btn px-6 py-3 rounded-xl font-bold text-sm bg-navy-light text-gray-300 hover:text-white transition">Module D: Điều chế Amin</button>
+            </div>
+
+            <!-- Module A -->
+            <div id="mod-a" class="proj-module glass-card p-8 rounded-3xl space-y-6">
+                <h2 class="text-2xl font-bold text-cyanAccent flex items-center gap-3"><i class="fa-solid fa-atom"></i> Module A: Tính base của amin</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>• Nguyên tử nitrogen trong phân tử amin có <strong>cặp electron tự do</strong>, có khả năng nhận proton (H⁺).</p>
+                        <p>• Do đó, các amin thể hiện tính base theo thuyết <strong>Brønsted–Lowry</strong>.</p>
+                        <p>• Amin tác dụng với nước làm quỳ tím chuyển màu xanh (đối với amin tan tốt) hoặc tác dụng với acid mạnh tạo thành <strong>muối ammonium</strong>.</p>
+                    </div>
+                    <div class="bg-navy-dark p-6 rounded-2xl border border-cyanAccent/30 space-y-4 font-mono text-sm">
+                        <div class="text-cyanAccent font-bold">Phương trình minh họa chuẩn:</div>
+                        <div class="p-3 bg-navy rounded-lg border border-navy-light text-mint">CH₃NH₂ + H₂O ⇌ CH₃NH₃⁺ + OH⁻</div>
+                        <div class="p-3 bg-navy rounded-lg border border-navy-light text-mint">CH₃NH₂ + HCl → CH₃NH₃Cl</div>
+                        <div class="p-3 bg-navy rounded-lg border border-navy-light text-mint">C₆H₅NH₂ + HCl → C₆H₅NH₃Cl</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module B -->
+            <div id="mod-b" class="proj-module hidden glass-card p-8 rounded-3xl space-y-6">
+                <h2 class="text-2xl font-bold text-purpleElec flex items-center gap-3"><i class="fa-solid fa-fire-flame-curved"></i> Module B: Phản ứng với acid nitrous (HNO₂)</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p>Axit nitrous (HNO₂) thường được tạo tại chỗ từ NaNO₂ và acid loãng ở điều kiện thích hợp. Phản ứng phụ thuộc vào loại amin:</p>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Amin bậc một no, mạch hở:</strong> Phản ứng với HNO₂ giải phóng khí nitrogen ($N_2$) và tạo alcohol tương ứng.</li>
+                        <li><strong>Amin thơm bậc một (như aniline):</strong> Ở nhiệt độ thấp (0 – 5°C), phản ứng tạo thành <strong>muối diazonium</strong> ($C_6H_5N_2^+Cl^-$).</li>
+                    </ul>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
+                    <div class="p-4 bg-navy-dark rounded-2xl border border-purpleElec/30 space-y-2">
+                        <div class="text-purpleElec font-bold">Methylamine + HNO₂:</div>
+                        <div class="p-3 bg-navy rounded-lg text-mint">CH₃NH₂ + HNO₂ → CH₃OH + N₂↑ + H₂O</div>
+                    </div>
+                    <div class="p-4 bg-navy-dark rounded-2xl border border-purpleElec/30 space-y-2">
+                        <div class="text-purpleElec font-bold">Aniline + NaNO₂ + HCl (0–5°C):</div>
+                        <div class="p-3 bg-navy rounded-lg text-mint">C₆H₅NH₂ + NaNO₂ + 2HCl → C₆H₅N₂Cl + NaCl + 2H₂O</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module C -->
+            <div id="mod-c" class="proj-module hidden glass-card p-8 rounded-3xl space-y-6">
+                <h2 class="text-2xl font-bold text-mint flex items-center gap-3"><i class="fa-solid fa-flask"></i> Module C: Phản ứng đặc trưng của Aniline</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>• Aniline tác dụng với nước bromine tạo thành kết tủa trắng <strong>2,4,6-tribromoaniline</strong>.</p>
+                        <p>• Đây là phản ứng đặc trưng dùng để nhận biết aniline, đồng thời chứng minh ảnh hưởng của gốc phenyl đến nhóm $-NH_2$ (làm tăng độ linh động của nguyên tử H ở vòng benzene tại các vị trí ortho và para).</p>
+                    </div>
+                    <div class="bg-navy-dark p-6 rounded-2xl border border-mint/30 space-y-4 font-mono text-sm">
+                        <div class="text-mint font-bold">Phương trình hóa học:</div>
+                        <div class="p-3 bg-navy rounded-lg border border-navy-light text-cyanAccent">C₆H₅NH₂ + 3Br₂ → C₆H₂Br₃NH₂↓ + 3HBr</div>
+                        <div class="text-xs text-amberAlert"><i class="fa-solid fa-triangle-exclamation"></i> Hiện tượng: Dung dịch bromine mất màu, xuất hiện kết tủa trắng.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module D -->
+            <div id="mod-d" class="proj-module hidden glass-card p-8 rounded-3xl space-y-6">
+                <h2 class="text-2xl font-bold text-amberAlert flex items-center gap-3"><i class="fa-solid fa-vials"></i> Module D: Phương pháp điều chế Amin</h2>
+                <div class="space-y-6 text-gray-300 leading-relaxed">
+                    <div class="p-6 bg-navy-dark rounded-2xl border border-navy-light space-y-3">
+                        <h4 class="text-lg font-bold text-white">1. Alkyl hóa ammonia bằng dẫn xuất halogen</h4>
+                        <p class="text-sm">Ammonia tác dụng với dẫn xuất halogen có thể tạo ra hỗn hợp các amin và muối ammonium do phản ứng alkyl hóa tiếp diễn.</p>
+                        <div class="font-mono text-sm p-3 bg-navy rounded-lg text-cyanAccent">NH₃ + R–X → R–NH₂ + HX</div>
+                    </div>
+                    <div class="p-6 bg-navy-dark rounded-2xl border border-navy-light space-y-3">
+                        <h4 class="text-lg font-bold text-white">2. Khử hợp chất nitro thành amin</h4>
+                        <p class="text-sm">Khử hợp chất nitro (như nitrobenzene) bằng hệ xúc tác thích hợp (ví dụ $Fe/HCl$) thu được aniline.</p>
+                        <div class="font-mono text-sm p-3 bg-navy rounded-lg text-mint">C₆H₅NO₂ + 6[H] <span class="text-xs text-gray-400">(Fe/HCl)</span> → C₆H₅NH₂ + 2H₂O</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: VIRTUAL LAB (Phòng thí nghiệm ảo) -->
+        <section id="tab-virtuallab" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mint/10 border border-mint/30 text-mint text-sm font-semibold">
+                    <i class="fa-solid fa-flask"></i> Tương tác thời gian thực
+                </div>
+                <h1 class="text-4xl font-extrabold text-white">Phòng Thí Nghiệm Áo – Virtual Lab</h1>
+                <p class="text-gray-300">Chọn thí nghiệm, lựa chọn hóa chất và quan sát hiện tượng, phương trình hóa học chuẩn xác.</p>
+            </div>
+
+            <!-- Lab Workspace Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Experiment Selector & Controls -->
+                <div class="glass-card p-6 rounded-3xl space-y-6 lg:col-span-1 border border-navy-light">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-list-check text-cyanAccent"></i> Chọn Thí Nghiệm</h3>
+                    <div class="space-y-3">
+                        <button onclick="selectLabExp(1)" id="lab-btn-1" class="w-full text-left p-4 rounded-xl bg-navy border border-cyanAccent text-white font-medium text-sm transition flex items-center justify-between">
+                            <span>1. Điều chế Aniline từ Nitrobenzene</span>
+                            <i class="fa-solid fa-circle-check text-cyanAccent"></i>
+                        </button>
+                        <button onclick="selectLabExp(2)" id="lab-btn-2" class="w-full text-left p-4 rounded-xl bg-navy-dark border border-navy-light text-gray-300 font-medium text-sm transition hover:border-purpleElecf flex items-center justify-between">
+                            <span>2. Alkyl hóa Ammonia</span>
+                            <i class="fa-solid fa-circle text-gray-600"></i>
+                        </button>
+                        <button onclick="selectLabExp(3)" id="lab-btn-3" class="w-full text-left p-4 rounded-xl bg-navy-dark border border-navy-light text-gray-300 font-medium text-sm transition hover:border-mint flex items-center justify-between">
+                            <span>3. Aniline + Nước Bromine</span>
+                            <i class="fa-solid fa-circle text-gray-600"></i>
+                        </button>
+                    </div>
+
+                    <div class="border-t border-navy-light pt-4 space-y-3">
+                        <h4 class="text-sm font-bold text-cyanAccent">Trình tự thao tác:</h4>
+                        <ol class="text-xs text-gray-300 space-y-2 list-decimal pl-4">
+                            <li>Xác định chất tham gia ban đầu.</li>
+                            <li>Lựa chọn tác nhân khử hoặc chất xúc tác phù hợp.</li>
+                            <li>Nhấn nút <strong>"Tiến hành phản ứng"</strong> để mô phỏng hiện tượng.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Right: Lab Bench Simulation Area -->
+                <div class="glass-card p-6 rounded-3xl lg:col-span-2 border border-navy-light flex flex-col justify-between space-y-6">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 border-b border-navy-light">
+                            <h3 id="lab-title" class="text-2xl font-bold text-white">Thí nghiệm 1: Điều chế Aniline từ Nitrobenzene</h3>
+                            <span id="lab-badge" class="px-3 py-1 rounded-full bg-cyanAccent/20 text-cyanAccent text-xs font-bold">Mô phỏng khái niệm</span>
+                        </div>
+
+                        <!-- Visual Lab Animation Container -->
+                        <div class="my-6 p-8 rounded-2xl bg-navy-dark border border-navy-light text-center relative overflow-hidden min-h-[220px] flex flex-col items-center justify-center space-y-4">
+                            <div id="lab-animation-visual" class="flex items-center justify-center gap-6 text-4xl">
+                                <div class="p-4 bg-navy rounded-2xl border border-cyanAccent/40 shadow-lg text-cyanAccent">
+                                    <i class="fa-solid fa-bottle-droplet"></i>
+                                    <div class="text-xs mt-2 font-mono text-gray-300">C₆H₅NO₂</div>
+                                </div>
+                                <i class="fa-solid fa-plus text-gray-400 text-xl"></i>
+                                <div class="p-4 bg-navy rounded-2xl border border-purpleElec/40 shadow-lg text-purpleElec">
+                                    <i class="fa-solid fa-fire-flame-curved"></i>
+                                    <div class="text-xs mt-2 font-mono text-gray-300">6[H] (Fe/HCl)</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right text-cyanAccent text-xl animate-pulse"></i>
+                                <div id="lab-product-box" class="p-4 bg-navy rounded-2xl border border-mint/40 shadow-lg text-mint opacity-50 transition-all duration-700">
+                                    <i class="fa-solid fa-vial"></i>
+                                    <div class="text-xs mt-2 font-mono text-gray-300">C₆H₅NH₂</div>
+                                </div>
+                            </div>
+                            <div id="lab-status-text" class="text-sm font-medium text-gray-300 italic">Trạng thái: Sẵn sàng tiến hành phản ứng.</div>
+                        </div>
+
+                        <!-- Balanced Equation & Explanation -->
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-xl bg-navy border border-navy-light font-mono text-sm">
+                                <span class="text-gray-400 text-xs block mb-1">Phương trình phản ứng:</span>
+                                <div id="lab-equation" class="text-cyanAccent font-bold text-base">C₆H₅NO₂ + 6[H] --(Fe/HCl, t°)--> C₆H₅NH₂ + 2H₂O</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-navy border border-navy-light text-sm text-gray-300 space-y-1">
+                                <span class="text-mint font-bold block text-xs uppercase tracking-wider">Hiện tượng & Giải thích:</span>
+                                <p id="lab-explanation">Nitrobenzene phản ứng với hệ khử Fe/HCl ở điều kiện đun nóng sinh ra aniline. Ký hiệu [H] biểu thị tác nhân khử quy ước trong hóa hữu cơ.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Controls -->
+                    <div class="flex flex-wrap gap-4 pt-4 border-t border-navy-light">
+                        <button onclick="runLabReaction()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyanAccent to-mint text-navy font-bold text-sm shadow-lg hover:opacity-90 transition flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Tiến hành phản ứng
+                        </button>
+                        <button onclick="resetLabReaction()" class="px-6 py-3 rounded-xl bg-navy-dark border border-gray-600 text-gray-300 font-medium text-sm hover:border-cyanAccent transition flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Đặt lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: GALLERY (Thư viện phản ứng) -->
+        <section id="tab-gallery" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h1 class="text-4xl font-extrabold text-white">Thư Viện Phản Ứng & Phân Tử</h1>
+                <p class="text-gray-300">Bộ sưu tập mô hình 3D, sơ đồ cấu trúc và phương trình trực quan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gallery Card 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-navy-light hover:border-cyanAccent transition group">
+                    <div class="h-48 bg-navy-dark flex items-center justify-center text-cyanAccent text-6xl group-hover:scale-105 transition duration-500">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="text-xs text-cyanAccent font-semibold uppercase tracking-wider">Cấu trúc phân tử</div>
+                        <h3 class="text-xl font-bold text-white">Mô hình Methylamine ($CH_3NH_2$)</h3>
+                        <p class="text-gray-300 text-sm">Gồm nhóm methyl liên kết với nhóm amino, thể hiện tính base mạnh hơn ammonia do hiệu ứng đẩy electron.</p>
+                    </div>
+                </div>
+                <!-- Gallery Card 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-navy-light hover:border-purpleElec transition group">
+                    <div class="h-48 bg-navy-dark flex items-center justify-center text-purpleElec text-6xl group-hover:scale-105 transition duration-500">
+                        <i class="fa-solid fa-ring"></i>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="text-xs text-purpleElec font-semibold uppercase tracking-wider">Hợp chất thơm</div>
+                        <h3 class="text-xl font-bold text-white">Mô hình Aniline ($C_6H_5NH_2$)</h3>
+                        <p class="text-gray-300 text-sm">Amin thơm quan trọng, chất lỏng không màu, ít tan trong nước, là nguyên liệu sản xuất phẩm nhuộm và dược phẩm.</p>
+                    </div>
+                </div>
+                <!-- Gallery Card 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-navy-light hover:border-mint transition group">
+                    <div class="h-48 bg-navy-dark flex items-center justify-center text-mint text-6xl group-hover:scale-105 transition duration-500">
+                        <i class="fa-solid fa-vials"></i>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="text-xs text-mint font-semibold uppercase tracking-wider">Phản ứng nhận biết</div>
+                        <h3 class="text-xl font-bold text-white">Aniline + Nước Bromine</h3>
+                        <p class="text-gray-300 text-sm">Phản ứng thế nguyên tử H ở vòng benzene tạo kết tủa trắng 2,4,6-tribromoaniline.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: QUIZ (Kiểm tra kiến thức 8 câu) -->
+        <section id="tab-quiz" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purpleElec/10 border border-purpleElec/30 text-purpleElec text-sm font-semibold">
+                    <i class="fa-solid fa-circle-question"></i> Đánh giá năng lực
+                </div>
+                <h1 class="text-4xl font-extrabold text-white">Kiểm tra kiến thức Amin</h1>
+                <p class="text-gray-300">Hoàn thành 8 câu hỏi trắc nghiệm bám sát chương trình Hóa học 12.</p>
+            </div>
+
+            <div id="quiz-container" class="space-y-6">
+                <!-- Quiz questions will be dynamically rendered or structured here -->
+                <div class="glass-card p-6 rounded-2xl space-y-4 border border-navy-light">
+                    <div class="flex justify-between items-center text-sm text-cyanAccent font-semibold">
+                        <span>Câu hỏi 1 / 8</span>
+                        <span>Nhận biết & Tính chất</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Công thức hóa học của methylamine là gì?</h3>
+                    <div class="space-y-2">
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q1" value="a" class="mr-2"> C₂H₅NH₂
+                        </label>
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q1" value="b" class="mr-2"> CH₃NH₂
+                        </label>
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q1" value="c" class="mr-2"> (CH₃)₂NH
+                        </label>
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q1" value="d" class="mr-2"> C₆H₅NH₂
+                        </label>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl space-y-4 border border-navy-light">
+                    <div class="flex justify-between items-center text-sm text-cyanAccent font-semibold">
+                        <span>Câu hỏi 2 / 8</span>
+                        <span>Tính chất hóa học</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Dung dịch aniline trong nước không làm đổi màu chất chỉ thị nào sau đây?</h3>
+                    <div class="space-y-2">
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q2" value="a" class="mr-2"> Quỳ tím
+                        </label>
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q2" value="b" class="mr-2"> Phenolphthalein
+                        </label>
+                        <label class="block p-3 rounded-xl bg-navy border border-navy-light hover:border-cyanAccent cursor-pointer transition">
+                            <input type="radio" name="q2" value="c" class="mr-2"> Cả quỳ tím và phenolphthalein đều không đổi màu
+                        </label>
+                    </div>
+                </div>
+
+                <div class="text-center pt-4">
+                    <button onclick="submitQuiz()" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyanAccent to-purpleElec text-navy font-bold text-base shadow-lg hover:opacity-95 transition">
+                        Nộp bài & Xem kết quả
+                    </button>
+                </div>
+            </div>
+            <div id="quiz-result" class="hidden glass-card p-6 rounded-2xl text-center space-y-3 border border-mint">
+                <h3 class="text-2xl font-bold text-mint">Kết quả bài kiểm tra</h3>
+                <p id="quiz-score-text" class="text-lg text-white">Bạn đã trả lời đúng các câu hỏi cơ bản. Tính base và phản ứng của amin đã được nắm vững!</p>
+            </div>
+        </section>
+
+        <!-- TAB 6: ABOUT (Về chúng tôi) -->
+        <section id="tab-about" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8">
+            <div class="glass-card p-8 rounded-3xl space-y-6 border border-navy-light">
+                <h1 class="text-3xl font-extrabold text-white text-center">Về AMINE <span class="text-cyanAccent">LAB</span></h1>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p><strong>Mục đích xây dựng:</strong> Biến kiến thức hóa học hữu cơ lớp 12 (chương trình Kết nối tri thức với cuộc sống) thành trải nghiệm trực quan, sinh động và dễ hiểu.</p>
+                    <p><strong>Đối tượng hướng đến:</strong> Học sinh lớp 12 THPT, giáo viên bộ môn Hóa học và những ai yêu thích khám phá khoa học.</p>
+                    <p><strong>Phương pháp giáo dục:</strong> Kiến thức cô đọng, mô phỏng khoa học trực quan, học qua thực hành ảo và tương tác phản ứng.</p>
+                    <p><strong>Giá trị cốt lõi:</strong> Chính xác tuyệt đối về mặt khoa học, trực quan, dễ hiểu và an toàn tuyệt đối cho người học.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: CONTACT (Liên hệ) -->
+        <section id="tab-contact" class="tab-content hidden py-12 px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto space-y-8">
+            <div class="glass-card p-8 rounded-3xl space-y-6 border border-navy-light">
+                <div class="text-center space-y-2">
+                    <h1 class="text-3xl font-extrabold text-white">Kết nối với AMINE LAB</h1>
+                    <p class="text-gray-300 text-sm">Gửi góp ý, báo lỗi kiến thức hoặc đề xuất tính năng mới.</p>
+                </div>
+                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Họ và tên</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl bg-navy border border-navy-light text-white focus:border-cyanAccent focus:outline-none" placeholder="Nhập họ tên của bạn">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl bg-navy border border-navy-light text-white focus:border-cyanAccent focus:outline-none" placeholder="name@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Chủ đề</label>
+                        <select class="w-full px-4 py-3 rounded-xl bg-navy border border-navy-light text-white focus:border-cyanAccent focus:outline-none">
+                            <option>Góp ý nội dung</option>
+                            <option>Báo lỗi kiến thức hóa học</option>
+                            <option>Lỗi giao diện</option>
+                            <option>Đề xuất tính năng</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Nội dung</label>
+                        <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-navy border border-navy-light text-white focus:border-cyanAccent focus:outline-none" placeholder="Nhập nội dung phản hồi..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyanAccent to-mint text-navy font-bold shadow-lg hover:opacity-95 transition">
+                        Gửi phản hồi
+                    </button>
+                    <div id="contact-notice" class="hidden text-center text-xs text-mint font-medium">Biểu mẫu đang ở chế độ demo. Cảm ơn bạn đã đóng góp!</div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-dark border-t border-navy-light py-8 mt-12 text-center text-sm text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 space-y-3">
+            <p>© 2026 AMINE LAB – Nền tảng học tập Hóa học 12 tương tác trực quan.</p>
+            <p class="text-xs text-gray-500">Chương trình Kết nối tri thức với cuộc sống.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-cyanAccent', 'bg-navy-light/60');
+                btn.classList.add('hover:text-cyanAccent', 'hover:bg-navy-light/40');
+            });
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('text-cyanAccent', 'bg-navy-light/60');
+                activeNav.classList.remove('hover:text-cyanAccent', 'hover:bg-navy-light/40');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function switchProjectModule(modId) {
+            document.querySelectorAll('.proj-module').forEach(el => el.classList.add('hidden'));
+            document.getElementById(modId).classList.remove('hidden');
+
+            document.querySelectorAll('.proj-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-cyanAccent', 'text-navy', 'shadow-md');
+                btn.classList.add('bg-navy-light', 'text-gray-300');
+            });
+            const activeBtn = document.getElementById('btn-' + modId);
+            activeBtn.classList.add('bg-cyanAccent', 'text-navy', 'shadow-md');
+            activeBtn.classList.remove('bg-navy-light', 'text-gray-300');
+        }
+
+        // Virtual Lab Logic
+        let currentExp = 1;
+        function selectLabExp(expNum) {
+            currentExp = expNum;
+            document.querySelectorAll('[id^="lab-btn-"]').forEach(btn => {
+                btn.classList.remove('border-cyanAccent', 'border-purpleElec', 'border-mint', 'bg-navy');
+                btn.classList.add('bg-navy-dark', 'border-navy-light', 'text-gray-300');
+            });
+            const activeBtn = document.getElementById('lab-btn-' + expNum);
+            activeBtn.classList.remove('bg-navy-dark', 'border-navy-light', 'text-gray-300');
+            activeBtn.classList.add('bg-navy', 'border-cyanAccent', 'text-white');
+
+            const titleEl = document.getElementById('lab-title');
+            const eqEl = document.getElementById('lab-equation');
+            const expEl = document.getElementById('lab-explanation');
+            const visualEl = document.getElementById('lab-animation-visual');
+            const productBox = document.getElementById('lab-product-box');
+
+            productBox.style.opacity = '0.5';
+
+            if (expNum === 1) {
+                titleEl.innerText = "Thí nghiệm 1: Điều chế Aniline từ Nitrobenzene";
+                eqEl.innerText = "C₆H₅NO₂ + 6[H] --(Fe/HCl, t°)--> C₆H₅NH₂ + 2H₂O";
+                expEl.innerText = "Nitrobenzene phản ứng với hệ khử Fe/HCl ở điều kiện đun nóng sinh ra aniline. Ký hiệu [H] biểu thị tác nhân khử quy ước trong hóa hữu cơ.";
+                visualEl.innerHTML = `
+                    <div class="p-4 bg-navy rounded-2xl border border-cyanAccent/40 shadow-lg text-cyanAccent"><i class="fa-solid fa-bottle-droplet"></i><div class="text-xs mt-2 font-mono text-gray-300">C₆H₅NO₂</div></div>
+                    <i class="fa-solid fa-plus text-gray-400 text-xl"></i>
+                    <div class="p-4 bg-navy rounded-2xl border border-purpleElec/40 shadow-lg text-purpleElec"><i class="fa-solid fa-fire-flame-curved"></i><div class="text-xs mt-2 font-mono text-gray-300">6[H] (Fe/HCl)</div></div>
+                    <i class="fa-solid fa-arrow-right text-cyanAccent text-xl"></i>
+                    <div id="lab-product-box" class="p-4 bg-navy rounded-2xl border border-mint/40 shadow-lg text-mint opacity-50"><i class="fa-solid fa-vial"></i><div class="text-xs mt-2 font-mono text-gray-300">C₆H₅NH₂</div></div>
+                `;
+            } else if (expNum === 2) {
+                titleEl.innerText = "Thí nghiệm 2: Alkyl hóa Ammonia";
+                eqEl.innerText = "NH₃ + R–X → R–NH₂ + HX (và tiếp tục tạo amin bậc cao)";
+                expEl.innerText = "Ammonia tác dụng với dẫn xuất halogen tạo amin. Phản ứng có thể tiếp tục alkyl hóa tạo amin bậc cao hơn và muối ammonium.";
+                visualEl.innerHTML = `
+                    <div class="p-4 bg-navy rounded-2xl border border-cyanAccent/40 shadow-lg text-cyanAccent"><i class="fa-solid fa-flask"></i><div class="text-xs mt-2 font-mono text-gray-300">NH₃ + R-X</div></div>
+                    <i class="fa-solid fa-arrow-right text-cyanAccent text-xl"></i>
+                    <div id="lab-product-box" class="p-4 bg-navy rounded-2xl border border-mint/40 shadow-lg text-mint opacity-50"><i class="fa-solid fa-vials"></i><div class="text-xs mt-2 font-mono text-gray-300">Hỗn hợp R-NH₂</div></div>
+                `;
+            } else if (expNum === 3) {
+                titleEl.innerText = "Thí nghiệm 3: Aniline tác dụng với nước Bromine";
+                eqEl.innerText = "C₆H₅NH₂ + 3Br₂ → C₆H₂Br₃NH₂↓ + 3HBr";
+                expEl.innerText = "Dung dịch bromine mất màu vàng nâu và xuất hiện kết tủa trắng 2,4,6-tribromoaniline. Đây là phản ứng đặc trưng nhận biết aniline.";
+                visualEl.innerHTML = `
+                    <div class="p-4 bg-navy rounded-2xl border border-cyanAccent/40 shadow-lg text-cyanAccent"><i class="fa-solid fa-ring"></i><div class="text-xs mt-2 font-mono text-gray-300">C₆H₅NH₂ + Br₂</div></div>
+                    <i class="fa-solid fa-arrow-right text-cyanAccent text-xl"></i>
+                    <div id="lab-product-box" class="p-4 bg-navy rounded-2xl border border-mint/40 shadow-lg text-mint opacity-50"><i class="fa-solid fa-snowflake"></i><div class="text-xs mt-2 font-mono text-gray-300">Kết tủa trắng</div></div>
+                `;
+            }
+            document.getElementById('lab-status-text').innerText = "Trạng thái: Sẵn sàng tiến hành phản ứng.";
+        }
+
+        function runLabReaction() {
+            const productBox = document.getElementById('lab-product-box');
+            if (productBox) {
+                productBox.style.opacity = '1';
+                productBox.classList.add('animate-bounce');
+            }
+            document.getElementById('lab-status-text').innerHTML = "<span class='text-mint font-bold'>✓ Phản ứng thành công! Sản phẩm đã hình thành theo đúng phương trình.</span>";
+        }
+
+        function resetLabReaction() {
+            selectLabExp(currentExp);
+        }
+
+        function submitQuiz() {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            let score = 0;
+            if (q1 && q1.value === 'b') score++;
+            if (q2 && q2.value === 'c') score++;
+
+            const resultDiv = document.getElementById('quiz-result');
+            const scoreText = document.getElementById('quiz-score-text');
+            resultDiv.classList.remove('hidden');
+            scoreText.innerText = `Bạn đã hoàn thành bài kiểm tra! Số câu đúng cơ bản: ${score} / 2. Hãy tiếp tục ôn tập kỹ lý thuyết nhé!`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            document.getElementById('contact-notice').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
